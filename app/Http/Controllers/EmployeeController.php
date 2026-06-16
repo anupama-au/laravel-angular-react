@@ -10,7 +10,8 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        return Employee::all();
+        //return Employee::all();
+         return Employee::latest()->paginate(5);
     }
 
     public function store(Request $request)
