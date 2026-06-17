@@ -57,3 +57,18 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## 🚀 Features & Tech Stack
+
+### **Frontend**
+* **Framework:** React
+* **Styling:** Tailwind CSS
+* **Data Fetching:** Axios API Integration
+
+### **Backend & API**
+* **Framework:** Laravel
+* **Architecture:** REST API
+
+### **Core Functionality**
+* 📦 Full **CRUD** Operations (Create, Read, Update, Delete)
+* 📑 Server-side **Pagination**
