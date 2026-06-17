@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import api from '../services/api';
 
-function EmployeeList() {
+function EmployeeList({
+  setForm,
+  setEditId,
+  }) {
   const [employees, setEmployees] = useState([]);
   // for pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,6 +30,22 @@ function EmployeeList() {
   const [showModal, setShowModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   
+  const editEmployee = (employee) => {
+  setForm({
+    name: employee.name,
+    email: employee.email,
+    phone: employee.phone,
+    position: employee.position,
+    department: employee.department,
+  });
+
+  setEditId(employee.id);
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+};
   // useEffect(() => {
   //   fetchEmployees();
   // }, []);
@@ -99,12 +118,7 @@ function EmployeeList() {
               </td>
 
               <td className="p-4">
-                {/* <button
-                  onClick={() => deleteEmployee(employee.id)}
-                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
-                >
-                  Delete
-                </button> */}
+                
                 <button
                 onClick={() => {
                   setSelectedEmployee(employee.id);
@@ -114,13 +128,14 @@ function EmployeeList() {
               >
                 Delete
               </button>
-
-              {/* <button
+              </td>
+              <td>
+              <button
                 onClick={() => editEmployee(employee)}
                 className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg mr-2"
               >
                 Edit
-              </button> */}
+              </button>
 
 
               </td>
@@ -181,13 +196,6 @@ function EmployeeList() {
             >
               Delete
             </button>
-
-            {/* <button
-              onClick={() => editEmployee(employee)}
-              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg mr-2"
-            >
-              Edit
-            </button> */}
 
           </div>
         </div>

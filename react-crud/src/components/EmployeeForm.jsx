@@ -1,20 +1,25 @@
 import { useState } from 'react';
 import api from '../services/api';
 
-function EmployeeForm() {
-  
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    position: '',
-    department: '',
-  });
-
+function EmployeeForm({
+    form,
+    setForm,
+    editId,
+    setEditId
+  }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await api.post('/employees', form);
+   // await api.post('/employees', form);
+    if (editId) {
+      await api.put(`/employees/${editId}`, form);
+
+      alert('Employee Updated');
+    } else {
+      await api.post('/employees', form);
+
+      alert('Employee Added');
+    }
 
     setForm({
       name: '',
@@ -24,7 +29,9 @@ function EmployeeForm() {
       department: '',
     });
 
-    alert('Employee Added');
+    //alert('Employee Added');
+      setEditId(null);
+
   };
 
   
@@ -34,7 +41,7 @@ function EmployeeForm() {
   className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6"
 >
   <h2 className="text-2xl font-bold mb-6">
-    Add Employee
+    {editId ? 'Edit Employee' : 'Add Employee'}
   </h2>
 
   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -91,12 +98,12 @@ function EmployeeForm() {
 
   </div>
 
-  <button
-    type="submit"
-    className="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
-  >
-    Save Employee
-  </button>
+ <button
+  type="submit"
+  className="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg"
+>
+  {editId ? 'Update Employee' : 'Save Employee'}
+</button>
 </form>
   );
 }
