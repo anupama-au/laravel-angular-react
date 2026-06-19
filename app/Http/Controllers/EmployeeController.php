@@ -8,10 +8,26 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     //return Employee::all();
+    //      return Employee::latest()->paginate(5);
+    // }
+    public function index(Request $request)
     {
-        //return Employee::all();
-         return Employee::latest()->paginate(5);
+        $search = $request->search;
+
+        $employees = Employee::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('phone', 'like', "%{$search}%")
+                        ->orWhere('position', 'like', "%{$search}%")
+                        ->orWhere('department', 'like', "%{$search}%");
+        })
+        ->latest()
+        ->paginate(5);
+
+        return response()->json($employees);
     }
 
     public function store(Request $request)

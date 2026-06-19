@@ -6,6 +6,8 @@ function EmployeeList({
   setEditId,
   }) {
   const [employees, setEmployees] = useState([]);
+  const [search, setSearch] = useState('');
+  
   // for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
@@ -16,9 +18,15 @@ function EmployeeList({
   // };
 
   // updating  fetch employees to add pagination
+  // const fetchEmployees = async (page = 1) => {
+  // const response = await api.get(
+  //   `/employees?page=${page}`
+  // );
+
+ // updating tech function to add search also
   const fetchEmployees = async (page = 1) => {
   const response = await api.get(
-    `/employees?page=${page}`
+    `/employees?page=${page}&search=${search}`
   );
 
   setEmployees(response.data.data);
@@ -51,9 +59,13 @@ function EmployeeList({
   // }, []);
 
   //code changes for pagination
+  // useEffect(() => {
+  // fetchEmployees(currentPage);
+  // }, [currentPage]);
+  //added search aslo in pagination
   useEffect(() => {
   fetchEmployees(currentPage);
-  }, [currentPage]);
+  }, [currentPage, search]);
 
   const deleteEmployee = async (id) => {
     await api.delete(`/employees/${id}`);
@@ -72,9 +84,21 @@ function EmployeeList({
     <div className="bg-white shadow-lg rounded-lg overflow-hidden">
 
       <div className="p-6 border-b">
-        <h2 className="text-2xl font-bold text-gray-800">
+        {/* <h2 className="text-2xl font-bold text-gray-800">
           Employees
-        </h2>
+        </h2> */}
+          <div className="p-4">
+            <input
+              type="text"
+              placeholder="Search employees..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="w-full border rounded-lg p-3"
+            />
+          </div>
       </div>
 
       <table className="w-full">
