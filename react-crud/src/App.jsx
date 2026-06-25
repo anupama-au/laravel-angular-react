@@ -1,36 +1,38 @@
-import { useState } from 'react';
-import EmployeeForm from './components/EmployeeForm';
-import EmployeeList from './components/EmployeeList';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import EmployeeForm from "./components/EmployeeForm";
+import EmployeeList from "./components/EmployeeList";
+import Login from "./pages/Login";
+import Logout from "./pages/Logout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    position: '',
-    department: '',
-  });
-
-  const [editId, setEditId] = useState(null);
-
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-5xl font-bold text-center mb-8">
-        Employee Management
-      </h1>
+    
+    <BrowserRouter>
+      <Routes>
 
-      <EmployeeForm
-        form={form}
-        setForm={setForm}
-        editId={editId}
-        setEditId={setEditId}
-      />
+        <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route
+          path="/employees"
+          element={
+            <ProtectedRoute>
+              <div className="min-h-screen bg-gray-100 p-8">
+                 <Logout />
+                <h1 className="text-5xl font-bold text-center mb-8">
+                  Employee Management
+                </h1>
 
-      <EmployeeList
-        setForm={setForm}
-        setEditId={setEditId}
-      />
-    </div>
+                <EmployeeForm />
+                <EmployeeList />
+              </div>
+            </ProtectedRoute>
+          }
+        />
+
+      </Routes>
+    </BrowserRouter>
+    
   );
 }
 

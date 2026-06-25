@@ -72,3 +72,4 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ### **Core Functionality**
 * 📦 Full **CRUD** Operations (Create, Read, Update, Delete)
 * 📑 Server-side **Pagination**
+* 🔐 Authentication with Laravel Sanctum

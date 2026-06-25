@@ -2,7 +2,14 @@ import { useState } from 'react';
 import api from '../services/api';
 
 function EmployeeForm({
-    form,
+   // form,
+   form = {
+    name: '',
+    email: '',
+    phone: '',
+    position: '',
+    department: '',
+  },
     setForm,
     editId,
     setEditId
